@@ -33,7 +33,7 @@
   <release>
     <license>PHP 2.01</license>
     <state>stable</state>
-    <version>1.1</version>
+    <version>2.0</version>
     <date>2004-03-03</date>
     <notes>
       * BC BREAK! No longer allowing all methods to be called statically. You must now instantiate an instance of Net_UserAgent_Detect using the singleton() method and then call methods using the returned object. This allows Net_UserAgent_Detect to be PHP5 compatible.
