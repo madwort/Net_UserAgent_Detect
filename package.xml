@@ -26,6 +26,12 @@
       <email>dallen@php.net</email>
       <role>helper</role>
     </maintainer>
+    <maintainer>
+      <user>gurugeek</user>
+      <name>David Costa</name>
+      <email>gurugeek@php.net</email>
+      <role>helper</role>
+    </maintainer>
   </maintainers>
   <deps>
     <dep type="php" rel="ge" version="4.1.0" />
