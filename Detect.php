@@ -79,7 +79,7 @@ class Net_UserAgent_Detect {
      * the versions of those operating systems (windows)
      * @var array $os
      */
-    var $os = array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'winme', 'win2k', 'winxp', 'winnt', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliantunix', 'dec', 'sinix', 'freebsd', 'bsd');
+    var $os = array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'winme', 'win2k', 'winxp', 'winnt', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd');
 
     /**
      * Array that stores credentials for each of the browser/os combinations.  These allow
@@ -360,7 +360,7 @@ class Net_UserAgent_Detect {
             $os['sco']      = (strpos($agt, 'sco') !== false) || (strpos($agt, 'unix_sv') !== false);
             $os['unixware'] = (strpos($agt, 'unix_system_v') !== false); 
             $os['mpras']    = (strpos($agt, 'ncr') !== false); 
-            $os['reliantunix']  = (strpos($agt, 'reliantunix') !== false);
+            $os['reliant']  = (strpos($agt, 'reliant') !== false);
             $os['dec']      = (strpos($agt, 'dec') !== false) || (strpos($agt, 'osf1') !== false) || (strpos($agt, 'dec_alpha') !== false) || (strpos($agt, 'alphaserver') !== false) || (strpos($agt, 'ultrix') !== false) || (strpos($agt, 'alphastation') !== false);
             $os['sinix']    = (strpos($agt, 'sinix') !== false);
             $os['freebsd']  = (strpos($agt, 'freebsd') !== false);
