@@ -31,11 +31,6 @@ define('NET_USERAGENT_DETECT_ACCEPT',   'accept');
 define('NET_USERAGENT_DETECT_ALL',      'all');
 
 // }}}
-// {{{ requires
-
-require_once 'PEAR.php';
-
-// }}}
 // {{{ class Net_UserAgent_Detect
 
 /**
@@ -117,27 +112,27 @@ class Net_UserAgent_Detect {
         $hasRun = true;
         // {{{ set up static properties
 
-        $options = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'options');
-        $in_userAgent = isset($options['userAgent']) && !is_null($in_userAgent) ? $options['userAgent'] : null;
-        $in_detect = isset($options['detectOptions']) && !is_null($in_detect) ? $options['detectOptions'] : null;
+        $options = &Net_UserAgent_Detect::_getStaticProperty('options');
+        $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : null;
+        $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : null;
 
         // User agent string that is being analyzed
-        $userAgent = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'userAgent');
+        $userAgent = &Net_UserAgent_Detect::_getStaticProperty('userAgent');
 
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up'));
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
-        $os = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'os');
+        $os = &Net_UserAgent_Detect::_getStaticProperty('os');
         $os = array_flip(array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'winme', 'win2k', 'winxp', 'winnt', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd'));
 
         // Array which stores known issues with the given client that can
         // be used for on the fly tweaking so that the client may recieve
         // the proper handling of this quirk.
-        $quirks = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'quirks');
+        $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
         $quirks = array(
                 'must_cache_forms'         => false,
                 'popups_disabled'          => false,
@@ -151,7 +146,7 @@ class Net_UserAgent_Detect {
         // combinations.  These allow quick access to determine if the
         // current client has a feature that is going to be implemented
         // in the script.
-        $features = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'features');
+        $features = &Net_UserAgent_Detect::_getStaticProperty('features');
         $features = array(
                 'javascript'   => false,
                 'dhtml'        => false,
@@ -162,21 +157,21 @@ class Net_UserAgent_Detect {
         // The leading identifier is the very first term in the user
         // agent string, which is used to identify clients which are not
         // Mosaic-based browsers.
-        $leadingIdentifier = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'leadingIdentifier');
+        $leadingIdentifier = &Net_UserAgent_Detect::_getStaticProperty('leadingIdentifier');
 
         // The full version of the client as supplied by the very first
         // numbers in the user agent
-        $version = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'version');
+        $version = &Net_UserAgent_Detect::_getStaticProperty('version');
         $version = 0;
 
         // The major part of the client version, which is the integer
         // value of the version.
-        $majorVersion = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'majorVersion');
+        $majorVersion = &Net_UserAgent_Detect::_getStaticProperty('majorVersion');
         $majorVersion = 0;
 
         // The minor part of the client version, which is the decimal
         // parts of the version
-        $subVersion = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'subVersion');
+        $subVersion = &Net_UserAgent_Detect::_getStaticProperty('subVersion');
         $subVersion = 0;
 
         // }}}
@@ -230,7 +225,7 @@ class Net_UserAgent_Detect {
     
         // Browser type
         if ($detectFlags[NET_USERAGENT_DETECT_ALL] || $detectFlags[NET_USERAGENT_DETECT_BROWSER]) {
-            $browser['konq']    = (strpos($agt, 'konqueror') !== false || strpos($agt, 'safari') !== false);
+            $browser['konq']    = $browser['safari'] = (strpos($agt, 'konqueror') !== false || strpos($agt, 'safari') !== false);
             $browser['text']    = (strpos($agt, 'links') !== false) || (strpos($agt, 'lynx') !== false) || (strpos($agt, 'w3m') !== false);
             $browser['ns']      = (strpos($agt, 'mozilla') !== false) && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
             $browser['ns2']     = $browser['ns'] && $majorVersion == 2;
@@ -424,7 +419,7 @@ class Net_UserAgent_Detect {
      */
     function setOption($in_field, $in_value)
     {
-        $options = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'options');
+        $options = &Net_UserAgent_Detect::_getStaticProperty('options');
         $options[$in_field] = $in_value;
     }
 
@@ -445,7 +440,7 @@ class Net_UserAgent_Detect {
     function isBrowser($in_match)
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         return isset($browser[strtolower($in_match)]) ? $browser[strtolower($in_match)] : false;
     }
 
@@ -466,7 +461,7 @@ class Net_UserAgent_Detect {
     function getBrowser($in_expectList)
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         foreach((array) $in_expectList as $brwsr) {
             if (!empty($browser[strtolower($brwsr)])) {
                 return $brwsr;
@@ -505,7 +500,7 @@ class Net_UserAgent_Detect {
     ))
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         foreach((array) $in_vendorStrings as $flag => $string) {
             if (!empty($browser[$flag])) {
                 $vendorString = $string;
@@ -514,7 +509,7 @@ class Net_UserAgent_Detect {
 
         // if there are no matches just use the user agent leading idendifier (usually Mozilla)
         if (!isset($vendorString)) {
-            $leadingIdentifier = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'leadingIdentifier');
+            $leadingIdentifier = &Net_UserAgent_Detect::_getStaticProperty('leadingIdentifier');
             $vendorString = $leadingIdentifier;
         }
         
@@ -533,7 +528,7 @@ class Net_UserAgent_Detect {
     function isIE()
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         return !empty($browser['ie']);
     }
 
@@ -549,7 +544,7 @@ class Net_UserAgent_Detect {
     function isNavigator()
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         return !empty($browser['nav']);
     }
 
@@ -569,7 +564,7 @@ class Net_UserAgent_Detect {
     function isNetscape()
     {
         Net_UserAgent_Detect::detect();
-        $browser = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'browser');
+        $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
         return !empty($browser['ns4up']);
     }
     
@@ -590,7 +585,7 @@ class Net_UserAgent_Detect {
     function isOS($in_match)
     {
         Net_UserAgent_Detect::detect();
-        $os = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'os');
+        $os = &Net_UserAgent_Detect::_getStaticProperty('os');
         return isset($os[strtolower($in_match)]) ? $os[strtolower($in_match)] : false;
     }
 
@@ -609,7 +604,7 @@ class Net_UserAgent_Detect {
     function getOS($in_expectList)
     {
         Net_UserAgent_Detect::detect();
-        $os = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'os');
+        $os = &Net_UserAgent_Detect::_getStaticProperty('os');
         foreach((array) $in_expectList as $expectOs) {
             if (!empty($os[strtolower($expectOs)])) {
                 return $expectOs;
@@ -648,7 +643,7 @@ class Net_UserAgent_Detect {
         Net_UserAgent_Detect::detect();
         $osString = 'Unknown';
 
-        $os = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'os');
+        $os = &Net_UserAgent_Detect::_getStaticProperty('os');
         foreach((array) $in_osStrings as $flag => $string) {
             if (!empty($os[$flag])) {
                 $osString = $string;
@@ -673,7 +668,7 @@ class Net_UserAgent_Detect {
      */
     function setQuirk($in_quirk, $in_hasQuirk = true)
     {
-        $quirks = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'quirks');
+        $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
         $hasQuirk = !empty($in_hasQuirk); 
         $quirks[strtolower($in_quirk)] = $hasQuirk;
     }
@@ -694,7 +689,7 @@ class Net_UserAgent_Detect {
     function hasQuirk($in_quirk)
     {
         Net_UserAgent_Detect::detect();
-        $quirks = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'quirks');
+        $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
         return !empty($quirks[strtolower($in_quirk)]);
     }
     
@@ -714,7 +709,7 @@ class Net_UserAgent_Detect {
     function getQuirk()
     {
         Net_UserAgent_Detect::detect();
-        $quirks = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'quirks');
+        $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
         return isset($quirks[strtolower($in_quirks)]) ? $quirks[strtolower($in_quirks)] : null; 
     }
 
@@ -733,7 +728,7 @@ class Net_UserAgent_Detect {
      */
     function setFeature($in_feature, $in_hasFeature = true)
     {
-        $features = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'features');
+        $features = &Net_UserAgent_Detect::_getStaticProperty('features');
         $features[strtolower($in_feature)] = $in_hasFeature;
     }
 
@@ -753,7 +748,7 @@ class Net_UserAgent_Detect {
     function hasFeature($in_feature)
     {
         Net_UserAgent_Detect::detect();
-        $features = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'features');
+        $features = &Net_UserAgent_Detect::_getStaticProperty('features');
         return !empty($features[strtolower($in_feature)]);
     }
     
@@ -773,7 +768,7 @@ class Net_UserAgent_Detect {
     function getFeature($in_feature)
     {
         Net_UserAgent_Detect::detect();
-        $features = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'features');
+        $features = &Net_UserAgent_Detect::_getStaticProperty('features');
         return isset($features[strtolower($in_feature)]) ? $features[strtolower($in_feature)] : null; 
     }
 
@@ -802,7 +797,7 @@ class Net_UserAgent_Detect {
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
-            $typeArray = &PEAR::getStaticProperty('Net_UserAgent_Detect', $type);
+            $typeArray = &Net_UserAgent_Detect::_getStaticProperty($type);
             foreach((array) $in_expectList as $match) {
                 if (!empty($typeArray[$match])) {
                     return $match;
@@ -835,7 +830,7 @@ class Net_UserAgent_Detect {
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
-            $typeArray = &PEAR::getStaticProperty('Net_UserAgent_Detect', $type);
+            $typeArray = &Net_UserAgent_Detect::_getStaticProperty($type);
             foreach((array) $in_values as $value) {
                 $typeArray[$value] = true;
             }
@@ -865,7 +860,7 @@ class Net_UserAgent_Detect {
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
-            $typeArray = &PEAR::getStaticProperty('Net_UserAgent_Detect', $type);
+            $typeArray = &Net_UserAgent_Detect::_getStaticProperty($type);
             return !empty($typeArray[$in_value]);
         }
         else {
@@ -885,8 +880,26 @@ class Net_UserAgent_Detect {
     function getUserAgent()
     {
         Net_UserAgent_Detect::detect();
-        $userAgent = &PEAR::getStaticProperty('Net_UserAgent_Detect', 'userAgent');
+        $userAgent = &Net_UserAgent_Detect::_getStaticProperty('userAgent');
         return $userAgent;
+    }
+
+    // }}}
+    // {{{ _getStaticProperty()
+
+    /**
+     * Copy of getStaticProperty() from PEAR.php to avoid having to
+     * include PEAR.php
+     *
+     * @access private
+     * @param  string $var    The variable to retrieve.
+     * @return mixed   A reference to the variable. If not set it will be
+     *                 auto initialised to NULL.
+     */
+    function &_getStaticProperty($var)
+    {
+        static $properties;
+        return $properties[$var];
     }
 
     // }}}
