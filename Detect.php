@@ -15,14 +15,10 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 // | Authors: Dan Allen <dan@mojavelinux.com>                             |
+// |          Jason Rust <jrust@php.net>                                  |
 // +----------------------------------------------------------------------+
 
 // $Id$
-
-// }}}
-// {{{ description
-
-// Net_UserAgent_Detect Determine the Web browser, version, and platform from an HTTP user agent string
 
 // }}}
 // {{{ constants
@@ -35,7 +31,6 @@ define('NET_USERAGENT_DETECT_ACCEPT',   'accept');
 define('NET_USERAGENT_DETECT_ALL',      'all');
 
 // }}}
-
 // {{{ class Net_UserAgent_Detect
 
 /**
@@ -49,11 +44,10 @@ define('NET_USERAGENT_DETECT_ALL',      'all');
  * version 1.3 of Horde.
  *
  * @version  Revision: 0.1
+ * @author   Jason Rust <jrust@php.net>
  * @author   Dan Allen <dan@mojavelinux.com>
  * @author   Chuck Hagenbuch <chuck@horde.org>
  * @author   Jon Parise <jon@horde.org>
- * @access   public
- * @since    PHP 4.1
  * @package  Net_UserAgent
  */
 
@@ -151,18 +145,18 @@ class Net_UserAgent_Detect {
     var $encoding = array();
 
     // }}}
+    // {{{ constructor
+
+    function Net_UserAgent_Detect($in_userAgent = null, $in_detect = null)
+    {
+        $this->detect($in_userAgent, $in_detect);
+    }
+
+    // }}}
     // {{{ singleton
 
     /**
-     * To be used in place of the contructor to return any open instance.
-     *
-     * Most of the time we want to evaluate the client's user agent string,
-     * so we want to make sure that we only have to run the detect() function
-     * once.  Therefore, all of the all of the properties and methods must map
-     * to a single state.  Therefore, this function is used in place of the
-     * contructor to return any open instances of the client object, and if none
-     * are open will create a new instance and cache it using a static
-     * variable.
+     * To be used in place of the contructor to return only open instance.
      *
      * @access public 
      * @return object Net_UserAgent_Detect instance
@@ -176,14 +170,6 @@ class Net_UserAgent_Detect {
         }
         
         return $instance; 
-    }
-
-    // }}}
-    // {{{ constructor
-
-    function Net_UserAgent_Detect($in_userAgent = null, $in_detect = null)
-    {
-        $this->detect($in_userAgent, $in_detect);
     }
 
     // }}}
@@ -203,10 +189,6 @@ class Net_UserAgent_Detect {
      */
     function detect($in_userAgent = null, $in_detect = null)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         // detemine what user agent we are using
         if (is_null($in_userAgent)) {
             if (isset($_SERVER['HTTP_USER_AGENT'])) {
@@ -451,10 +433,6 @@ class Net_UserAgent_Detect {
      */
     function isBrowser($in_match)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $match = strtolower($in_match);
         return isset($this->browser[$match]) ? $this->browser[$match] : false;
     }
@@ -475,10 +453,6 @@ class Net_UserAgent_Detect {
      */
     function getBrowser($in_expectList)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         foreach((array) $in_expectList as $browser) {
             if (!empty($this->browser[strtolower($browser)])) {
                 return $browser;
@@ -516,10 +490,6 @@ class Net_UserAgent_Detect {
         'konq'     => 'Konqueror/Safari',
     ))
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         foreach((array) $in_vendorStrings as $flag => $string) {
             if (!empty($this->browser[$flag])) {
                 $vendorString = $string;
@@ -545,10 +515,6 @@ class Net_UserAgent_Detect {
      */
     function isIE()
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return !empty($this->browser['ie']);
     }
 
@@ -563,10 +529,6 @@ class Net_UserAgent_Detect {
      */
     function isNavigator()
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return !empty($this->browser['nav']);
     }
 
@@ -585,10 +547,6 @@ class Net_UserAgent_Detect {
      */
     function isNetscape()
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return !empty($this->browser['ns4up']);
     }
     
@@ -608,10 +566,6 @@ class Net_UserAgent_Detect {
      */
     function isOS($in_match)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $match = strtolower($in_match);
         return isset($this->os[$match]) ? $this->os[$match] : false;
     }
@@ -630,10 +584,6 @@ class Net_UserAgent_Detect {
      */
     function getOS($in_expectList)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         foreach((array) $in_expectList as $os) {
             if (!empty($this->os[strtolower($os)])) {
                 return $os;
@@ -669,10 +619,6 @@ class Net_UserAgent_Detect {
        'unix'  => 'Linux/Unix',
     ))
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $osString = 'Unknown';
 
         foreach((array) $in_osStrings as $flag => $string) {
@@ -699,10 +645,6 @@ class Net_UserAgent_Detect {
      */
     function setQuirk($in_quirk, $in_hasQuirk = true)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $hasQuirk = !empty($in_hasQuirk); 
         $this->quirks[strtolower($in_quirk)] = $hasQuirk;
     }
@@ -722,10 +664,6 @@ class Net_UserAgent_Detect {
      */
     function hasQuirk($in_quirk)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return !empty($this->quirks[strtolower($in_quirk)]);
     }
     
@@ -744,10 +682,6 @@ class Net_UserAgent_Detect {
      */
     function getQuirk()
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return isset($this->quirks[strtolower($in_quirks)]) ? $this->quirks[strtolower($in_quirks)] : null; 
     }
 
@@ -766,10 +700,6 @@ class Net_UserAgent_Detect {
      */
     function setFeature($in_feature, $in_hasFeature = true)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $this->features[strtolower($in_feature)] = $in_hasFeature;
     }
 
@@ -788,10 +718,6 @@ class Net_UserAgent_Detect {
      */
     function hasFeature($in_feature)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return !empty($this->features[strtolower($in_feature)]);
     }
     
@@ -810,10 +736,6 @@ class Net_UserAgent_Detect {
      */
     function getFeature($in_feature)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return isset($this->features[strtolower($in_feature)]) ? $this->features[strtolower($in_feature)] : null; 
     }
 
@@ -838,10 +760,6 @@ class Net_UserAgent_Detect {
      */
     function getAcceptType($in_expectList, $in_type)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
@@ -875,10 +793,6 @@ class Net_UserAgent_Detect {
      */
     function setAcceptType($in_values, $in_type)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
@@ -908,10 +822,6 @@ class Net_UserAgent_Detect {
      */
     function hasAcceptType($in_value, $in_type)
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         $type = strtolower($in_type);
 
         if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
@@ -934,10 +844,6 @@ class Net_UserAgent_Detect {
      */
     function getUserAgent()
     {
-        if (!isset($this) || get_class($this) != 'net_useragent_detect') {
-            $this =& Net_UserAgent_Detect::singleton();
-        }
-
         return $this->userAgent;
     }
 
