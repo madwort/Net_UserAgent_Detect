@@ -122,7 +122,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
@@ -228,6 +228,7 @@ class Net_UserAgent_Detect {
             $browser['konq']    = $browser['safari'] = (strpos($agt, 'konqueror') !== false || strpos($agt, 'safari') !== false);
             $browser['text']    = (strpos($agt, 'links') !== false) || (strpos($agt, 'lynx') !== false) || (strpos($agt, 'w3m') !== false);
             $browser['ns']      = (strpos($agt, 'mozilla') !== false) && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
+            $browser['netgem']  = (strpos($agt, 'netgem') !== false);
             $browser['ns2']     = $browser['ns'] && $majorVersion == 2;
             $browser['ns3']     = $browser['ns'] && $majorVersion == 3;
             $browser['ns4']     = $browser['ns'] && $majorVersion == 4;
@@ -289,7 +290,7 @@ class Net_UserAgent_Detect {
             elseif (($browser['ns4'] && ($version > 4.05)) || $browser['ie5up'] || $browser['hotjava3up']) {
                 Net_UserAgent_Detect::setFeature('javascript', 1.3);
             }
-            elseif ($browser['ns6up'] || $browser['gecko']) {
+            elseif ($browser['ns6up'] || $browser['gecko'] || $browser['netgem']) {
                 Net_UserAgent_Detect::setFeature('javascript', 1.5);
             }
         }
@@ -376,11 +377,11 @@ class Net_UserAgent_Detect {
                 Net_UserAgent_Detect::setFeature('gecko', $matches[1]);
             }
 
-            if ($browser['ns6up'] || $browser['opera5up'] || $browser['konq']) {
+            if ($browser['ns6up'] || $browser['opera5up'] || $browser['konq'] || $browser['netgem']) {
                 Net_UserAgent_Detect::setFeature('dom');
             }
 
-            if ($browser['ie4up'] || $browser['ns4up'] || $browser['opera5up'] || $browser['konq']) {
+            if ($browser['ie4up'] || $browser['ns4up'] || $browser['opera5up'] || $browser['konq'] || $browser['netgem']) {
                 Net_UserAgent_Detect::setFeature('dhtml');
             }
         }
@@ -497,6 +498,7 @@ class Net_UserAgent_Detect {
         'ns4'      => 'Netscape 4.x',
         'ns6up'    => 'Mozilla/Netscape 6.x',
         'konq'     => 'Konqueror/Safari',
+        'netgem'   => 'Netgem/iPlayer',
     ))
     {
         Net_UserAgent_Detect::detect();
