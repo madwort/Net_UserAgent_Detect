@@ -122,7 +122,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera5up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem', 'webdav'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
@@ -225,6 +225,7 @@ class Net_UserAgent_Detect {
     
         // Browser type
         if ($detectFlags[NET_USERAGENT_DETECT_ALL] || $detectFlags[NET_USERAGENT_DETECT_BROWSER]) {
+            $browser['webdav']  = ($agt == 'microsoft data access internet publishing provider dav' || $agt == 'microsoft data access internet publishing provider protocol discovery');
             $browser['konq']    = $browser['safari'] = (strpos($agt, 'konqueror') !== false || strpos($agt, 'safari') !== false);
             $browser['text']    = (strpos($agt, 'links') !== false) || (strpos($agt, 'lynx') !== false) || (strpos($agt, 'w3m') !== false);
             $browser['ns']      = (strpos($agt, 'mozilla') !== false) && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
