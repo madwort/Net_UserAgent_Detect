@@ -27,7 +27,7 @@
     <release>
       <license>PHP 2.01</license>
       <state>stable</state>
-      <version>0.1</version>
+      <version>1.0</version>
       <date>2002-05-21</date>
       <notes>
          This is the initial independent PEAR release.
