@@ -1,5 +1,6 @@
 <?php
 require_once '../Detect.php';
+error_reporting(E_ALL);
 // {{{ some functions for printing
 
 if (!function_exists('println')) {
@@ -15,7 +16,7 @@ if (!function_exists('println')) {
             }
         }
 
-        //echo $in_string . $linefeed;
+        echo $in_string . $linefeed;
     }
 }
 
@@ -23,7 +24,7 @@ if (!function_exists('println')) {
 
 $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr;';
 $browserSearch = array('ie6up', 'ie5', 'ie4', 'gecko', 'ns6up', 'ns4', 'nav', 'safari');
-if (($sapi = php_sapi_name()) == 'apache' || $sapi == 'cgi') {
+if (($sapi = php_sapi_name()) != 'apache' && $sapi != 'cgi') {
     Net_UserAgent_Detect::setOption('userAgent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0rc1) Gecko/20020417'); 
 }
 

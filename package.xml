@@ -39,10 +39,10 @@
   <release>
     <license>PHP 2.01</license>
     <state>stable</state>
-    <version>2.0</version>
-    <date>2004-03-03</date>
+    <version>2.0.1</version>
+    <date>2004-03-11</date>
     <notes>
-      * PHP5 compatible 
+      * Made it PHP5 compatible in a way that is BC
       * Added support for Safari
       * Bumped konq's javascript version up to 1.4
       * Fix bug where w3m caused warnings
