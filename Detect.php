@@ -258,7 +258,7 @@ class Net_UserAgent_Detect {
     
         // Browser type
         if ($detectFlags[NET_USERAGENT_DETECT_ALL] || $detectFlags[NET_USERAGENT_DETECT_BROWSER]) {
-            $brwsr['konq']    = (strpos($agt, 'konqueror') !== false);
+            $brwsr['konq']    = (strpos($agt, 'konqueror') !== false || strpos($agt, 'safari') !== false);
             $brwsr['text']    = (strpos($agt, 'links') !== false) || (strpos($agt, 'lynx') !== false) || (strpos($agt, 'w3m') !== false);
             $brwsr['ns']      = (strpos($agt, 'mozilla') !== false) && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
             $brwsr['ns2']     = $brwsr['ns'] && $this->majorVersion == 2;
@@ -269,7 +269,7 @@ class Net_UserAgent_Detect {
             $brwsr['nav']     = $brwsr['ns'] && $this->majorVersion < 5;
             $brwsr['ns6']     = !$brwsr['konq'] && $brwsr['ns'] && $this->majorVersion == 5;
             $brwsr['ns6up']   = $brwsr['ns6'] && $this->majorVersion >= 5;
-            $brwsr['gecko']   = (strpos($agt, 'gecko') !== false);
+            $brwsr['gecko']   = (strpos($agt, 'gecko') !== false && !$brwsr['konq']);
             $brwsr['ie']      = (strpos($agt, 'msie') !== false) && !(strpos($agt, 'opera') !== false);
             $brwsr['ie3']     = $brwsr['ie'] && $this->majorVersion < 4;
             $brwsr['ie4']     = $brwsr['ie'] && $this->majorVersion == 4 && (strpos($agt, 'msie 4') !== false);
@@ -308,13 +308,13 @@ class Net_UserAgent_Detect {
             elseif ($brwsr['opera5up']) {
                 $this->setFeature('javascript', 1.3);
             }
-            elseif ($brwsr['opera'] || $brwsr['ns3'] || $brwsr['konq']) {
+            elseif ($brwsr['opera'] || $brwsr['ns3']) {
                 $this->setFeature('javascript', 1.1);
             }
             elseif (($brwsr['ns4'] && ($this->version <= 4.05)) || $brwsr['ie4']) {
                 $this->setFeature('javascript', 1.2);
             }
-            elseif ($brwsr['ie5up'] && (strpos($agt, 'mac') !== false)) {
+            elseif (($brwsr['ie5up'] && strpos($agt, 'mac') !== false) || $brwsr['konq']) {
                 $this->setFeature('javascript', 1.4);
             }
             // I can't believe IE6 still has javascript 1.3, what a shitty browser
@@ -513,7 +513,7 @@ class Net_UserAgent_Detect {
         'nav'      => 'Netscape Navigator',
         'ns4'      => 'Netscape 4.x',
         'ns6up'    => 'Mozilla/Netscape 6.x',
-        'konq'     => 'Konqueror',
+        'konq'     => 'Konqueror/Safari',
     ))
     {
         if (!isset($this) || get_class($this) != 'net_useragent_detect') {
