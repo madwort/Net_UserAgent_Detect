@@ -20,6 +20,12 @@
         <email>dallen@php.net</email>
         <role>lead</role>
       </maintainer>
+      <maintainer>
+        <user>jrust</user>
+        <name>Jason Rust</name>
+        <email>jrust@php.net</email>
+        <role>lead</role>
+      </maintainer>
     </maintainers>
     <deps>
       <dep type="php" rel="ge" version="4.1.0" />
