@@ -33,7 +33,7 @@
          This is the initial independent PEAR release.
       </notes>
       <filelist>
-      <dir name="/" baseinstalldir="Net">
+      <dir name="/" baseinstalldir="Net/UserAgent">
         <file role="php">Detect.php</file>
       </dir>
     </filelist>
