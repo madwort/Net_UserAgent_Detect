@@ -246,8 +246,10 @@ class Net_UserAgent_Detect {
         $os = array_flip($os);
 
         // Get the type and version of the client
-        preg_match(";^([[:alpha:]]+)[ /\(]*[[:alpha:]]*([\d]*)(\.[\d\.]*);", $agt, $matches);
-        list($null, $this->leadingIdentifier, $this->majorVersion, $this->subVersion) = $matches;
+        if (preg_match(";^([[:alpha:]]+)[ /\(]*[[:alpha:]]*([\d]*)(\.[\d\.]*);", $agt, $matches)) {
+            list(, $this->leadingIdentifier, $this->majorVersion, $this->subVersion) = $matches;
+        }
+
         if (empty($this->leadingIdentifier)) {
             $this->leadingIdentifier = 'Unknown';
         }
