@@ -308,7 +308,7 @@ class Net_UserAgent_Detect {
             elseif ($brwsr['opera5up']) {
                 $this->setFeature('javascript', 1.3);
             }
-            elseif ($brwsr['opera'] || $brwsr['ns3']) {
+            elseif ($brwsr['opera'] || $brwsr['ns3'] || $brwsr['konq']) {
                 $this->setFeature('javascript', 1.1);
             }
             elseif (($brwsr['ns4'] && ($this->version <= 4.05)) || $brwsr['ie4']) {
