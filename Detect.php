@@ -79,7 +79,7 @@ class Net_UserAgent_Detect {
      * the versions of those operating systems (windows)
      * @var array $os
      */
-    var $os = array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'winme', 'win2k', 'winnt', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliantunix', 'dec', 'sinix', 'freebsd', 'bsd');
+    var $os = array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'winme', 'win2k', 'winxp', 'winnt', 'os2', 'mac', 'mac68k', 'macppc', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliantunix', 'dec', 'sinix', 'freebsd', 'bsd');
 
     /**
      * Array that stores credentials for each of the browser/os combinations.  These allow
@@ -107,6 +107,7 @@ class Net_UserAgent_Detect {
         'cache_ssl_downloads'      => false,
         'scrollbar_in_way'         => false,
         'break_disposition_header' => false,
+        'nested_table_render_bug'  => false,
     );
 
     /**
@@ -245,16 +246,16 @@ class Net_UserAgent_Detect {
         $os = array_flip($os);
 
         // Get the type and version of the client
-        preg_match(";^([[:alpha:]]+)[ /\(]*[[:alpha:]]*([\d]*)\.([\d\.]*);", $agt, $matches);
+        preg_match(";^([[:alpha:]]+)[ /\(]*[[:alpha:]]*([\d]*)(\.[\d\.]*);", $agt, $matches);
         list($null, $this->leadingIdentifier, $this->majorVersion, $this->subVersion) = $matches;
         if (empty($this->leadingIdentifier)) {
             $this->leadingIdentifier = 'Unknown';
         }
 
-        $this->version = $this->majorVersion . '.' . $this->subVersion;
+        $this->version = $this->majorVersion . $this->subVersion;
     
         // Browser type
-        if ($detectFlags[NET_USERAGENT_DETECT_ALL] || $detectFlags[NET_USERAGENT_DETECT_BROWSER]) {   
+        if ($detectFlags[NET_USERAGENT_DETECT_ALL] || $detectFlags[NET_USERAGENT_DETECT_BROWSER]) {
             $brwsr['konq']    = (strpos($agt, 'konqueror') !== false);
             $brwsr['text']    = (strpos($agt, 'links') !== false) || (strpos($agt, 'lynx') !== false) || (strpos($agt, 'w3m') !== false);
             $brwsr['ns']      = (strpos($agt, 'mozilla') !== false) && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
@@ -263,20 +264,20 @@ class Net_UserAgent_Detect {
             $brwsr['ns4']     = $brwsr['ns'] && $this->majorVersion == 4;
             $brwsr['ns4up']   = $brwsr['ns'] && $this->majorVersion >= 4;
             // determine if this is a Netscape Navigator
-            $brwsr['nav']     = $brwsr['ns'] && ((strpos($agt, ';nav') !== false) || ((strpos($agt, '; nav') !== false)));
+            $brwsr['nav']     = $brwsr['ns'] && $this->majorVersion < 5;
             $brwsr['ns6']     = !$brwsr['konq'] && $brwsr['ns'] && $this->majorVersion == 5;
             $brwsr['ns6up']   = $brwsr['ns6'] && $this->majorVersion >= 5;
             $brwsr['gecko']   = (strpos($agt, 'gecko') !== false);
             $brwsr['ie']      = (strpos($agt, 'msie') !== false) && !(strpos($agt, 'opera') !== false);
             $brwsr['ie3']     = $brwsr['ie'] && $this->majorVersion < 4;
             $brwsr['ie4']     = $brwsr['ie'] && $this->majorVersion == 4 && (strpos($agt, 'msie 4') !== false);
-            $brwsr['ie4up']   = $brwsr['ie'] && $this->majorVersion >= 4;
-            $brwsr['ie5']     = $brwsr['ie'] && $this->majorVersion == 4 && (strpos($agt, 'msie 5.0') !== false);
-            $brwsr['ie5_5']   = $brwsr['ie'] && $this->majorVersion == 4 && (strpos($agt, 'msie 5.5') !== false);
-            $brwsr['ie5up']   = $brwsr['ie'] && !$brwsr['ie3'] && !$brwsr['ie4'];
-            $brwsr['ie5_5up'] = $brwsr['ie'] && !$brwsr['ie3'] && !$brwsr['ie4'] && !$brwsr['ie5'];
-            $brwsr['ie6']     = $brwsr['ie'] && $this->majorVersion == 4 && (strpos($agt, 'msie 6.') !== false);
-            $brwsr['ie6up']   = $brwsr['ie'] && !$brwsr['ie3'] && !$brwsr['ie4'] && !$brwsr['ie5'] && !$brwsr['ie5_5'];
+            $brwsr['ie4up']   = $brwsr['ie'] && !$brwsr['ie3'];
+            $brwsr['ie5']     = $brwsr['ie4up'] && (strpos($agt, 'msie 5.0') !== false);
+            $brwsr['ie5_5']   = $brwsr['ie4up'] && (strpos($agt, 'msie 5.5') !== false);
+            $brwsr['ie5up']   = $brwsr['ie4up'] && !$brwsr['ie3'] && !$brwsr['ie4'];
+            $brwsr['ie5_5up'] = $brwsr['ie5up'] && !$brwsr['ie5'];
+            $brwsr['ie6']     = (strpos($agt, 'msie 6') !== false);
+            $brwsr['ie6up']   = $brwsr['ie5up'] && !$brwsr['ie5'] && !$brwsr['ie5_5'];
             $brwsr['opera']   = (strpos($agt, 'opera') !== false);
             $brwsr['opera2']  = (strpos($agt, 'opera 2') !== false) || (strpos($agt, 'opera/2') !== false);
             $brwsr['opera3']  = (strpos($agt, 'opera 3') !== false) || (strpos($agt, 'opera/3') !== false);
@@ -331,9 +332,10 @@ class Net_UserAgent_Detect {
             $os['win31'] = (strpos($agt, 'windows 3.1') !== false) || (strpos($agt, 'win16') !== false) || (strpos($agt, 'windows 16-bit') !== false);
             $os['winme'] = (strpos($agt, 'win 9x 4.90') !== false);
             $os['win2k'] = (strpos($agt, 'windows nt 5.0') !== false);
+            $os['winxp'] = (strpos($agt, 'windows nt 5.1') !== false);
             $os['win98'] = (strpos($agt, 'win98') !== false) || (strpos($agt, 'windows 98') !== false);
             $os['win9x'] = $os['win95'] || $os['win98'];
-            $os['winnt'] = (strpos($agt, 'winnt') !== false) || (strpos($agt, 'windows nt') !== false);
+            $os['winnt'] = ((strpos($agt, 'winnt') !== false) || (strpos($agt, 'windows nt') !== false)) && (strpos($agt, 'windows nt 5') === false);
             $os['win32'] = $os['win95'] || $os['winnt'] || $os['win98'] || $this->majorVersion >= 4 && (strpos($agt, 'win32') !== false) || (strpos($agt, '32bit') !== false);
             $os['os2']   = (strpos($agt, 'os/2') !== false) || (strpos($agt, 'ibm-webexplorer') !== false);
             $os['mac']   = (strpos($agt, 'mac') !== false);
@@ -358,8 +360,8 @@ class Net_UserAgent_Detect {
             $os['sco']      = (strpos($agt, 'sco') !== false) || (strpos($agt, 'unix_sv') !== false);
             $os['unixware'] = (strpos($agt, 'unix_system_v') !== false); 
             $os['mpras']    = (strpos($agt, 'ncr') !== false); 
-            $os['reliant']  = (strpos($agt, 'reliantunix') !== false);
-            $os['dec']      = (strpos($agt, 'dec') !== false) || (strpos($agt, 'osf1') !== false) || (strpos($agt, 'dec_alpha') !== false) || (strpos($agt, 'alphaserver') !== false) || (strpos($agt, 'ultrix') !== false) || (strpos($agt, 'alphastation') !== false); 
+            $os['reliantunix']  = (strpos($agt, 'reliantunix') !== false);
+            $os['dec']      = (strpos($agt, 'dec') !== false) || (strpos($agt, 'osf1') !== false) || (strpos($agt, 'dec_alpha') !== false) || (strpos($agt, 'alphaserver') !== false) || (strpos($agt, 'ultrix') !== false) || (strpos($agt, 'alphastation') !== false);
             $os['sinix']    = (strpos($agt, 'sinix') !== false);
             $os['freebsd']  = (strpos($agt, 'freebsd') !== false);
             $os['bsd']      = (strpos($agt, 'bsd') !== false);
@@ -388,6 +390,10 @@ class Net_UserAgent_Detect {
             if ($brwsr['ns6']) {
                 $this->setQuirk('popups_disabled');
                 $this->setQuirk('must_cache_forms');
+            }
+            
+            if ($brwsr['nav'] && $this->subVersion < .79) {
+                $this->setQuirk('nested_table_render_bug');
             }
         }
             
@@ -656,6 +662,7 @@ class Net_UserAgent_Detect {
        'winme' => 'Microsoft Windows Millenium',
        'win2k' => 'Microsoft Windows 2000',
        'winnt' => 'Microsoft Windows NT',
+       'winxp' => 'Microsoft Windows XP',
        'mac'   => 'Macintosh',
        'unix'  => 'Linux/Unix',
     ))
