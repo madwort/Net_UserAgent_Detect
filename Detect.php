@@ -105,14 +105,14 @@ class Net_UserAgent_Detect {
     function detect($in_userAgent = null, $in_detect = null)
     {
         static $hasRun;
-        if (!empty($hasRun)) {
+        $options = &Net_UserAgent_Detect::_getStaticProperty('options');
+        if (!empty($hasRun) && empty($options['re-evaluate'])) {
             return;
         }
 
         $hasRun = true;
         // {{{ set up static properties
 
-        $options = &Net_UserAgent_Detect::_getStaticProperty('options');
         $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : null;
         $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : null;
 
