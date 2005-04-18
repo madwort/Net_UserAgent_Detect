@@ -881,16 +881,7 @@ class Net_UserAgent_Detect {
      */
     function hasAcceptType($in_value, $in_type)
     {
-        Net_UserAgent_Detect::detect();
-        $type = strtolower($in_type);
-
-        if ($type == 'mimetype' || $type == 'language' || $type == 'charset' || $type == 'encoding') {
-            $typeArray = &Net_UserAgent_Detect::_getStaticProperty($type);
-            return !empty($typeArray[$in_value]);
-        }
-        else {
-            return false;
-        }
+        return (bool) Net_UserAgent_Detect::getAcceptType((array) $in_value, $in_type);
     }
 
     // }}}

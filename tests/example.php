@@ -24,7 +24,7 @@ if (!function_exists('println')) {
 
 if (in_array(php_sapi_name(), array('cli', 'cgi')) && empty($_SERVER['REMOTE_ADDR'])) {
     Net_UserAgent_Detect::setOption('re-evaluate', true);
-    foreach (array('en' => 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0rc1) Gecko/20020417',
+    foreach (array('en-us' => 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0rc1) Gecko/20020417',
                    'fr' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322)') as $lang => $brwsr) {
         putenv("HTTP_ACCEPT_LANGUAGE=$lang");
         Net_UserAgent_Detect::setOption('userAgent', $brwsr);
@@ -47,7 +47,7 @@ function print_info()
     println('Has "popups disabled" quirk: ' . (Net_UserAgent_Detect::hasQuirk('popups_disabled') ? 'Yes' : 'No'));
     println('Has "dom" feature: ' . (Net_UserAgent_Detect::hasFeature('dom') ? 'Yes' : 'No'));
     println('Javascript version: ' . Net_UserAgent_Detect::getFeature('javascript'));
-    $languages = array('fr', 'de', 'en');
+    $languages = array('fr', 'de', 'en-us');
     println('Accept Language: ' . Net_UserAgent_Detect::getAcceptType($languages, 'language'));
 }
 ?>
