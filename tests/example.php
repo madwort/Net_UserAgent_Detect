@@ -8,11 +8,11 @@ if (!function_exists('println')) {
         static $linefeed;
 
         if (!isset($linefeed)) {
-            if (($sapi = php_sapi_name()) == 'apache' || $sapi == 'cgi') {
-                $linefeed = '<br />';
+            if (in_array(php_sapi_name(), array('cli', 'cgi')) && empty($_SERVER['REMOTE_ADDR'])) {
+                $linefeed = "\n";
             }
             else {
-                $linefeed = "\n";
+                $linefeed = '<br />';
             }
         }
 
@@ -22,12 +22,12 @@ if (!function_exists('println')) {
 
 // }}}
 
-$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr;';
-$browserSearch = array('ie6up', 'ie5', 'ie4', 'gecko', 'ns6up', 'ns4', 'nav', 'safari');
-if (($sapi = php_sapi_name()) != 'apache' && $sapi != 'cgi') {
+if (in_array(php_sapi_name(), array('cli', 'cgi')) && empty($_SERVER['REMOTE_ADDR'])) {
+    $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr;';
     Net_UserAgent_Detect::setOption('userAgent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0rc1) Gecko/20020417'); 
 }
 
+$browserSearch = array('ie6up', 'ie5', 'ie4', 'gecko', 'ns6up', 'ns4', 'nav', 'safari');
 println('User Agent String: ' . Net_UserAgent_Detect::getUserAgent());
 println('Browser String: ' . Net_UserAgent_Detect::getBrowserString());
 println('OS String: ' . Net_UserAgent_Detect::getOSString());
