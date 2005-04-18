@@ -239,6 +239,9 @@ class Net_UserAgent_Detect {
             $browser['ns6']     = !$browser['konq'] && $browser['ns'] && $majorVersion == 5;
             $browser['ns6up']   = $browser['ns6'] && $majorVersion >= 5;
             $browser['gecko']   = (strpos($agt, 'gecko') !== false && !$browser['konq']);
+            $browser['firefox'] = $browser['gecko'] && strpos($agt, 'firefox') !== false;
+            $browser['firefox0.x'] = $browser['firefox'] && strpos($agt, 'firefox/0.') !== false;
+            $browser['firefox1.x'] = $browser['firefox'] && strpos($agt, 'firefox/1.') !== false;
             $browser['ie']      = (strpos($agt, 'msie') !== false) && !(strpos($agt, 'opera') !== false);
             $browser['ie3']     = $browser['ie'] && $majorVersion < 4;
             $browser['ie4']     = $browser['ie'] && $majorVersion == 4 && (strpos($agt, 'msie 4') !== false);
@@ -254,7 +257,11 @@ class Net_UserAgent_Detect {
             $browser['opera3']  = (strpos($agt, 'opera 3') !== false) || (strpos($agt, 'opera/3') !== false);
             $browser['opera4']  = (strpos($agt, 'opera 4') !== false) || (strpos($agt, 'opera/4') !== false);
             $browser['opera5']  = (strpos($agt, 'opera 5') !== false) || (strpos($agt, 'opera/5') !== false);
+            $browser['opera6']  = (strpos($agt, 'opera 6') !== false) || (strpos($agt, 'opera/6') !== false);
+            $browser['opera7']  = (strpos($agt, 'opera 7') !== false) || (strpos($agt, 'opera/7') !== false);
             $browser['opera5up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'];
+            $browser['opera6up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'];
+            $browser['opera7up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'] && !$browser['opera6'];
 
             $browser['aol']   = (strpos($agt, 'aol') !== false);
             $browser['aol3']  = $browser['aol'] && $browser['ie3'];
@@ -305,6 +312,7 @@ class Net_UserAgent_Detect {
             $os['winme'] = (strpos($agt, 'win 9x 4.90') !== false);
             $os['win2k'] = (strpos($agt, 'windows nt 5.0') !== false);
             $os['winxp'] = (strpos($agt, 'windows nt 5.1') !== false);
+            $os['win2003'] = (strpos($agt, 'windows nt 5.2') !== false);
             $os['win98'] = (strpos($agt, 'win98') !== false) || (strpos($agt, 'windows 98') !== false);
             $os['win9x'] = $os['win95'] || $os['win98'];
             $os['winnt'] = ((strpos($agt, 'winnt') !== false) || (strpos($agt, 'windows nt') !== false)) && (strpos($agt, 'windows nt 5') === false);
@@ -498,6 +506,8 @@ class Net_UserAgent_Detect {
         'nav'      => 'Netscape Navigator',
         'ns4'      => 'Netscape 4.x',
         'ns6up'    => 'Mozilla/Netscape 6.x',
+        'firefox0.x' => 'Firefox 0.x',
+        'firefox1.x' => 'Firefox 1.x',
         'konq'     => 'Konqueror/Safari',
         'netgem'   => 'Netgem/iPlayer',
     ))
@@ -639,6 +649,7 @@ class Net_UserAgent_Detect {
        'win2k' => 'Microsoft Windows 2000',
        'winnt' => 'Microsoft Windows NT',
        'winxp' => 'Microsoft Windows XP',
+       'win2003' => 'Microsoft Windows 2003',
        'mac'   => 'Macintosh',
        'unix'  => 'Linux/Unix',
     ))
