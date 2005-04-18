@@ -66,8 +66,8 @@ version 1.3 of Horde.</description>
     <provides type="function" name="Net_UserAgent_Detect::hasAcceptType" />
     <provides type="function" name="Net_UserAgent_Detect::getUserAgent" />
     <filelist>
-      <file role="test" baseinstalldir="Net_UserAgent_Detect" name="tests/example.php"/>
-      <file role="php" baseinstalldir="Net_UserAgent_Detect" name="Detect.php"/>
+      <file role="test" baseinstalldir="Net/UserAgent" name="tests/example.php"/>
+      <file role="php" baseinstalldir="Net/UserAgent" name="Detect.php"/>
     </filelist>
   </release>
   <changelog>
