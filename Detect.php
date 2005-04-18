@@ -678,6 +678,9 @@ class Net_UserAgent_Detect {
      * mechanism allows the coder to determine if an excepetion must
      * be made with the current client.
      *
+     * @param string $in_quirk The quirk to set
+     * @param string $in_hasQuirk (optional) Does the browser have the quirk?
+     *
      * @access public
      * @return void
      */
@@ -698,14 +701,14 @@ class Net_UserAgent_Detect {
      * mechanism allows the coder to determine if an excepetion must
      * be made with the current client.
      *
+     * @param string $in_quirk The quirk to detect
+     *
      * @access public
      * @return bool whether or not browser has this quirk
      */
     function hasQuirk($in_quirk)
     {
-        Net_UserAgent_Detect::detect();
-        $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
-        return !empty($quirks[strtolower($in_quirk)]);
+        return (bool) Net_UserAgent_Detect::getQuirk($in_quirk);
     }
     
     // }}}
@@ -718,14 +721,16 @@ class Net_UserAgent_Detect {
      * mechanism allows the coder to determine if an excepetion must
      * be made with the current client.
      *
+     * @param string $in_quirk The quirk to detect
+     *
      * @access public
      * @return string value of the quirk, in this case usually a boolean
      */
-    function getQuirk()
+    function getQuirk($in_quirk)
     {
         Net_UserAgent_Detect::detect();
         $quirks = &Net_UserAgent_Detect::_getStaticProperty('quirks');
-        return isset($quirks[strtolower($in_quirks)]) ? $quirks[strtolower($in_quirks)] : null; 
+        return isset($quirks[strtolower($in_quirk)]) ? $quirks[strtolower($in_quirk)] : null; 
     }
 
     // }}}
@@ -737,6 +742,9 @@ class Net_UserAgent_Detect {
      * Since the capabilities of client browsers vary widly, this interface
      * helps keep track of the core features of a client, such as if the client
      * supports dhtml, dom, javascript, etc.
+     *
+     * @param string $in_feature The feature to set
+     * @param string $in_hasFeature (optional) Does the browser have the feature?
      *
      * @access public
      * @return void
@@ -757,14 +765,14 @@ class Net_UserAgent_Detect {
      * helps keep track of the core features of a client, such as if the client
      * supports dhtml, dom, javascript, etc.
      *
+     * @param string $in_feature The feature to detect
+     *
      * @access public
      * @return bool whether or not the current client has this feature
      */
     function hasFeature($in_feature)
     {
-        Net_UserAgent_Detect::detect();
-        $features = &Net_UserAgent_Detect::_getStaticProperty('features');
-        return !empty($features[strtolower($in_feature)]);
+        return (bool) Net_UserAgent_Detect::getFeature($in_feature);
     }
     
     // }}}
@@ -776,6 +784,8 @@ class Net_UserAgent_Detect {
      * Since the capabilities of client browsers vary widly, this interface
      * helps keep track of the core features of a client, such as if the client
      * supports dhtml, dom, javascript, etc.
+     *
+     * @param string $in_feature The feature to detect
      *
      * @access public
      * @return string value of the feature requested
