@@ -113,8 +113,8 @@ class Net_UserAgent_Detect {
         $hasRun = true;
         // {{{ set up static properties
 
-        $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : null;
-        $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : null;
+        $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : $in_userAgent;
+        $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : $in_detect;
 
         // User agent string that is being analyzed
         $userAgent = &Net_UserAgent_Detect::_getStaticProperty('userAgent');
