@@ -113,8 +113,8 @@ class Net_UserAgent_Detect {
         $hasRun = true;
         // {{{ set up static properties
 
-        $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : $in_userAgent;
-        $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : $in_detect;
+        $in_userAgent = isset($options['userAgent']) && is_null($in_userAgent) ? $options['userAgent'] : null;
+        $in_detect = isset($options['detectOptions']) && is_null($in_detect) ? $options['detectOptions'] : null;
 
         // User agent string that is being analyzed
         $userAgent = &Net_UserAgent_Detect::_getStaticProperty('userAgent');
@@ -122,7 +122,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera5up', 'opera6up', 'opera7up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem', 'webdav'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'ie7', 'ie7up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera5up', 'opera6up', 'opera7up', 'opera8up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem', 'webdav', 'icab'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
@@ -230,6 +230,7 @@ class Net_UserAgent_Detect {
             $browser['text']    = strpos($agt, 'links') !== false || strpos($agt, 'lynx') !== false || strpos($agt, 'w3m') !== false;
             $browser['ns']      = strpos($agt, 'mozilla') !== false && !(strpos($agt, 'spoofer') !== false) && !(strpos($agt, 'compatible') !== false) && !(strpos($agt, 'hotjava') !== false) && !(strpos($agt, 'opera') !== false) && !(strpos($agt, 'webtv') !== false) ? 1 : 0;
             $browser['netgem']  = strpos($agt, 'netgem') !== false;
+            $browser['icab']    = strpos($agt, 'icab') !== false;
             $browser['ns2']     = $browser['ns'] && $majorVersion == 2;
             $browser['ns3']     = $browser['ns'] && $majorVersion == 3;
             $browser['ns4']     = $browser['ns'] && $majorVersion == 4;
@@ -252,6 +253,8 @@ class Net_UserAgent_Detect {
             $browser['ie5_5up'] = $browser['ie5up'] && !$browser['ie5'];
             $browser['ie6']     = strpos($agt, 'msie 6') !== false;
             $browser['ie6up']   = $browser['ie5up'] && !$browser['ie5'] && !$browser['ie5_5'];
+            $browser['ie7']     = strpos($agt, 'msie 7') !== false;
+            $browser['ie7up']   = $browser['ie6up'] && !$browser['ie6'];
             $browser['opera']   = strpos($agt, 'opera') !== false;
             $browser['opera2']  = strpos($agt, 'opera 2') !== false || strpos($agt, 'opera/2') !== false;
             $browser['opera3']  = strpos($agt, 'opera 3') !== false || strpos($agt, 'opera/3') !== false;
@@ -259,10 +262,11 @@ class Net_UserAgent_Detect {
             $browser['opera5']  = strpos($agt, 'opera 5') !== false || strpos($agt, 'opera/5') !== false;
             $browser['opera6']  = strpos($agt, 'opera 6') !== false || strpos($agt, 'opera/6') !== false;
             $browser['opera7']  = strpos($agt, 'opera 7') !== false || strpos($agt, 'opera/7') !== false;
+            $browser['opera8']  = strpos($agt, 'opera 8') !== false || strpos($agt, 'opera/8') !== false;
             $browser['opera5up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'];
             $browser['opera6up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'];
             $browser['opera7up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'] && !$browser['opera6'];
-
+            $browser['opera8up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'] && !$browser['opera6'] && !$browser['opera7'];
             $browser['aol']   = strpos($agt, 'aol') !== false;
             $browser['aol3']  = $browser['aol'] && $browser['ie3'];
             $browser['aol4']  = $browser['aol'] && $browser['ie4'];
