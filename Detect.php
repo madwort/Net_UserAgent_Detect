@@ -246,7 +246,7 @@ class Net_UserAgent_Detect {
             $browser['ie3']     = $browser['ie'] && $majorVersion < 4;
             $browser['ie4']     = $browser['ie'] && $majorVersion == 4 && (strpos($agt, 'msie 4') !== false);
             $browser['ie4up']   = $browser['ie'] && !$browser['ie3'];
-            $browser['ie5']     = $browser['ie4up'] && (strpos($agt, 'msie 5.0') !== false);
+            $browser['ie5']     = $browser['ie4up'] && (strpos($agt, 'msie 5') !== false);
             $browser['ie5_5']   = $browser['ie4up'] && (strpos($agt, 'msie 5.5') !== false);
             $browser['ie5up']   = $browser['ie4up'] && !$browser['ie3'] && !$browser['ie4'];
             $browser['ie5_5up'] = $browser['ie5up'] && !$browser['ie5'];
