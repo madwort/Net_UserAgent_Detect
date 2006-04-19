@@ -122,7 +122,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'ie6up', 'ie7', 'ie7up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera5up', 'opera6up', 'opera7up', 'opera8up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem', 'webdav', 'icab'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'belowns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'belowie6', 'ie6up', 'ie7', 'ie7up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera5up', 'opera6up', 'opera7up', 'belowopera8', 'opera8up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'netgem', 'webdav', 'icab'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
@@ -152,7 +152,8 @@ class Net_UserAgent_Detect {
                 'dhtml'        => false,
                 'dom'          => false,
                 'sidebar'      => false,
-                'gecko'        => false);
+                'gecko'        => false,
+                'ajax'         => false);
 
         // The leading identifier is the very first term in the user
         // agent string, which is used to identify clients which are not
@@ -236,7 +237,7 @@ class Net_UserAgent_Detect {
             $browser['ns4']     = $browser['ns'] && $majorVersion == 4;
             $browser['ns4up']   = $browser['ns'] && $majorVersion >= 4;
             // determine if this is a Netscape Navigator
-            $browser['nav']     = $browser['ns'] && $majorVersion < 5;
+            $browser['nav'] = $browser['belowns6'] = $browser['ns'] && $majorVersion < 5;
             $browser['ns6']     = !$browser['konq'] && $browser['ns'] && $majorVersion == 5;
             $browser['ns6up']   = $browser['ns6'] && $majorVersion >= 5;
             $browser['gecko']   = strpos($agt, 'gecko') !== false && !$browser['konq'];
@@ -255,6 +256,7 @@ class Net_UserAgent_Detect {
             $browser['ie6up']   = $browser['ie5up'] && !$browser['ie5'] && !$browser['ie5_5'];
             $browser['ie7']     = strpos($agt, 'msie 7') !== false;
             $browser['ie7up']   = $browser['ie6up'] && !$browser['ie6'];
+            $browser['belowie6']= $browser['ie'] && !$browser['ie6up'];
             $browser['opera']   = strpos($agt, 'opera') !== false;
             $browser['opera2']  = strpos($agt, 'opera 2') !== false || strpos($agt, 'opera/2') !== false;
             $browser['opera3']  = strpos($agt, 'opera 3') !== false || strpos($agt, 'opera/3') !== false;
@@ -267,6 +269,7 @@ class Net_UserAgent_Detect {
             $browser['opera6up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'];
             $browser['opera7up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'] && !$browser['opera6'];
             $browser['opera8up'] = $browser['opera'] && !$browser['opera2'] && !$browser['opera3'] && !$browser['opera4'] && !$browser['opera5'] && !$browser['opera6'] && !$browser['opera7'];
+            $browser['belowopera8'] = $browser['opera'] && !$browser['opera8up'];
             $browser['aol']   = strpos($agt, 'aol') !== false;
             $browser['aol3']  = $browser['aol'] && $browser['ie3'];
             $browser['aol4']  = $browser['aol'] && $browser['ie4'];
@@ -389,6 +392,10 @@ class Net_UserAgent_Detect {
             if ($browser['gecko']) {
                 preg_match(';gecko/([\d]+)\b;i', $agt, $matches);
                 Net_UserAgent_Detect::setFeature('gecko', $matches[1]);
+            }
+
+            if ($browser['gecko'] || $browser['ie5up'] || $browser['konq'] || $browser['opera8up']) {
+                Net_UserAgent_Detect::setFeature('ajax');
             }
 
             if ($browser['ns6up'] || $browser['opera5up'] || $browser['konq'] || $browser['netgem']) {
