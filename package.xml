@@ -33,22 +33,21 @@ version 1.3 of Horde.
   <email>gurugeek@php.net</email>
   <active>yes</active>
  </helper>
- <date>2006-04-19</date>
+ <date>2007-04-23</date>
  <time>11:38:53</time>
  <version>
-  <release>2.2.0</release>
-  <api>2.2.0</api>
+  <release>2.3.0</release>
+  <api>2.3.0</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>* Adding new "browsers" that make it easier to exclude old browsers: belowie6, belowns6, and belowopera8
-* Additional browsers now supported: opera8, ie7, icab
-* Adding new "feature" which tells if a browser is AJAX enabled: ajax
-* IE 5 on Mac is now detected correctly as ie5
-* Force override of the user agent now works.
+ <notes>* Additional browsers are now detected: opera9, firefox1.5, and firefox2.x
+* Added new feature detection for if a browsers has SVG
+* Added new feature detection for if a browsers has CSS2
+* Fixed a bug that crashed the script when running with APC
  </notes>
  <contents>
   <dir name="/">
@@ -136,6 +135,23 @@ version 1.3 of Horde.
 * Adding new "feature" which tells if a browser is AJAX enabled: ajax
 * IE 5 on Mac is now detected correctly as ie5
 * Force override of the user agent now works.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.3.0</release>
+    <api>2.3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2007-04-23</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>* Additional browsers are now detected: opera9, firefox1.5, and firefox2.x
+* Added new feature detection for if a browsers has SVG
+* Added new feature detection for if a browsers has CSS2
+* Fixed a bug that crashed the script when running with APC
    </notes>
   </release>
  </changelog>
