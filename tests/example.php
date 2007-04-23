@@ -40,7 +40,7 @@ else {
 
 function print_info()
 {
-    $browserSearch = array('ie6up', 'ie5', 'ie4', 'gecko', 'ns6up', 'ns4', 'nav', 'safari');
+    $browserSearch = array('ie7up', 'ie6up', 'firefox', 'gecko', 'ns6up', 'ns4', 'nav', 'safari');
     println('User Agent String: ' . Net_UserAgent_Detect::getUserAgent());
     println('Browser String: ' . Net_UserAgent_Detect::getBrowserString());
     println('OS String: ' . Net_UserAgent_Detect::getOSString());
@@ -48,6 +48,7 @@ function print_info()
     println('Has "popups disabled" quirk: ' . (Net_UserAgent_Detect::hasQuirk('popups_disabled') ? 'Yes' : 'No'));
     println('Has "dom" feature: ' . (Net_UserAgent_Detect::hasFeature('dom') ? 'Yes' : 'No'));
     println('Has "ajax" feature: ' . (Net_UserAgent_Detect::hasFeature('ajax') ? 'Yes' : 'No'));
+    println('Has "svg" feature: ' . (Net_UserAgent_Detect::hasFeature('svg') ? 'Yes' : 'No'));
     println('Javascript version: ' . Net_UserAgent_Detect::getFeature('javascript'));
     $languages = array('fr', 'de', 'en-us');
     println('Accept Language: ' . Net_UserAgent_Detect::getAcceptType($languages, 'language'));
