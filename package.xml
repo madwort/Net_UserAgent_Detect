@@ -33,21 +33,19 @@ version 1.3 of Horde.
   <email>gurugeek@php.net</email>
   <active>yes</active>
  </helper>
- <date>2007-09-19</date>
- <time>11:38:53</time>
+ <date>2008-10-11</date>
+ <time>17:36:53</time>
  <version>
-  <release>2.4.0</release>
-  <api>2.4.0</api>
+  <release>2.5.0</release>
+  <api>2.5.0</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>* Added a subclass, Net_UserAgent_Detect_APC, which allows Net_UserAgent_Detect results to be cached which makes subsequent lookups for that specific User Agent string very fast (Lucas Nealan)
-* Added support Windows CE (Lucas Nealan)
-* Added support for IE Mobile (Lucas Nealan)
-* Quirk detect for AJAX has been updated (Lucas Nealan)
+ <notes>* Added support for Google Chrome, Firefox 3, and Safari Mobile (iphone) (matteo)
+* Fixed a path error in APC.php.
  </notes>
  <contents>
   <dir name="/">
@@ -172,6 +170,21 @@ version 1.3 of Horde.
 * Added support Windows CE (Lucas Nealan)
 * Added support for IE Mobile (Lucas Nealan)
 * Quirk detect for AJAX has been updated (Lucas Nealan)
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.5.0</release>
+    <api>2.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-10-11</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>* Added support for Google Chrome, Firefox 3, and Safari Mobile (iphone) (matteo)
+* Fixed a path error in APC.php.
    </notes>
   </release>
  </changelog>
