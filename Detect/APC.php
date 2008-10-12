@@ -17,7 +17,7 @@
 
 // $Id$
 
-require_once 'Net_UserAgent/detect.php';
+require_once 'Net/UserAgent/Detect.php';
 
 class Net_UserAgent_Detect_APC extends Net_UserAgent_Detect
 {
