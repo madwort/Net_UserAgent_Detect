@@ -26,7 +26,8 @@ if (in_array(php_sapi_name(), array('cli', 'cgi')) && empty($_SERVER['REMOTE_ADD
     // List of user agent strings: http://www.scanmybrowser.com/ua_strings.html
     Net_UserAgent_Detect::setOption('re-evaluate', true);
     foreach (array('en-us' => 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0rc1) Gecko/20020417',
-                   'fr' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322)') as $lang => $brwsr) {
+                   'fr' => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322)',
+                   'Mozilla/4.0 Gecko') as $lang => $brwsr) {
         putenv("HTTP_ACCEPT_LANGUAGE=$lang");
         Net_UserAgent_Detect::setOption('userAgent', $brwsr);
         print_info();

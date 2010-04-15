@@ -413,8 +413,7 @@ class Net_UserAgent_Detect {
         // Set features
         if ($detectFlags[NET_USERAGENT_DETECT_ALL] || 
             ($detectFlags[NET_USERAGENT_DETECT_BROWSER] && $detectFlags[NET_USERAGENT_DETECT_FEATURES])) {
-            if ($browser['gecko']) {
-                preg_match(';gecko/([\d]+)\b;i', $agt, $matches);
+            if ($browser['gecko'] && preg_match(';gecko/([\d]+)\b;i', $agt, $matches)) {
                 Net_UserAgent_Detect::setFeature('gecko', $matches[1]);
             }
 
