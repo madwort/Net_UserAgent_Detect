@@ -40,8 +40,10 @@ version 1.3 of Horde.</description>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>Request #14790 - PHPCS
-Request #16224 - IE8, Vista detection</notes>
+ <notes>#15101: IE7up and IE8up correctly detected.
+#15834: Now detecting different versions of OSX.
+#16934: Fix undefined offset error.
+Adding support for IE9 and iPhone.</notes>
  <contents>
   <dir baseinstalldir="Net/UserAgent" name="/">
    <file baseinstalldir="Net/UserAgent" md5sum="48dce070a344ccb8fe975a929d282d3a" name="Detect/APC.php" role="php" />
