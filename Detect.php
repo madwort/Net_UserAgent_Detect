@@ -122,7 +122,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the vendor and version
         // of the different browsers
         $browser = &Net_UserAgent_Detect::_getStaticProperty('browser');
-        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'belowns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'firefox1.5', 'firefox2.x', 'firefox3.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'belowie6', 'ie6up', 'ie7', 'ie7up', 'ie8', 'ie8tr', 'ie8up', 'ie9', 'ie9up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera9', 'opera5up', 'opera6up', 'opera7up', 'belowopera8', 'opera8up', 'opera9up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'safari_mobile', 'chrome', 'netgem', 'webdav', 'icab'));
+        $browser = array_flip(array('ns', 'ns2', 'ns3', 'ns4', 'ns4up', 'nav', 'ns6', 'belowns6', 'ns6up', 'firefox', 'firefox0.x', 'firefox1.x', 'firefox1.5', 'firefox2.x', 'firefox3.x', 'gecko', 'ie', 'ie3', 'ie4', 'ie4up', 'ie5', 'ie5_5', 'ie5up', 'ie6', 'belowie6', 'ie6up', 'ie7', 'ie7up', 'ie8', 'ie8tr', 'ie8up', 'ie9', 'ie9tr', 'ie9up', 'opera', 'opera2', 'opera3', 'opera4', 'opera5', 'opera6', 'opera7', 'opera8', 'opera9', 'opera5up', 'opera6up', 'opera7up', 'belowopera8', 'opera8up', 'opera9up', 'aol', 'aol3', 'aol4', 'aol5', 'aol6', 'aol7', 'aol8', 'webtv', 'aoltv', 'tvnavigator', 'hotjava', 'hotjava3', 'hotjava3up', 'konq', 'safari', 'safari_mobile', 'chrome', 'netgem', 'webdav', 'icab'));
         
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
@@ -267,6 +267,7 @@ class Net_UserAgent_Detect {
             $browser['ie8tr'] = strpos($agt, 'msie 7') && strpos($agt,'trident/4') !== false;
             $browser['ie8'] = strpos($agt, 'msie 8') !== false;
             $browser['ie8up'] = $browser['ie7up'] && (!$browser['ie7'] || $browser['ie8']);
+            $browser['ie9tr'] = strpos($agt, 'msie 7') && strpos($agt,'trident/5') !== false;
             $browser['ie9'] = strpos($agt, 'msie 9') !== false;
             $browser['ie9up'] = $browser['ie8up'] && (!$browser['ie8'] || $browser['ie9']);
             $browser['belowie6']= $browser['ie'] && !$browser['ie6up'];
@@ -557,6 +558,7 @@ class Net_UserAgent_Detect {
                     'ie8up'    => 'Microsoft Internet Explorer 8.x',
                     'ie8tr'    => 'Microsoft Internet Explorer 8.x (Compatibility View)', 
                     'ie9up'    => 'Microsoft Internet Explorer 9.x',
+                    'ie9tr'    => 'Microsoft Internet Explorer 9.x (Compatibility View)', 
                     'opera4'   => 'Opera 4.x',
                     'opera5up' => 'Opera 5.x',
                     'nav'      => 'Netscape Navigator',
