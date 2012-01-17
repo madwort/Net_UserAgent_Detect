@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>Net_UserAgent_Detect</name>
  <channel>pear.php.net</channel>
  <summary>Net_UserAgent_Detect determines the Web browser, version, and platform from an HTTP user agent string</summary>
@@ -29,10 +29,10 @@ version 1.3 of Horde.</description>
   <email>gurugeek@php.net</email>
   <active>yes</active>
  </helper>
- <date>2010-04-15</date>
- <time>04:11:19</time>
+ <date>2012-01-17</date>
+ <time>23:54:33</time>
  <version>
-  <release>2.5.2</release>
+  <release>2.5.3</release>
   <api>2.5.0</api>
  </version>
  <stability>
@@ -40,15 +40,14 @@ version 1.3 of Horde.</description>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
- <notes>#15101: IE7up and IE8up correctly detected.
-#15834: Now detecting different versions of OSX.
-#16934: Fix undefined offset error.
-Adding support for IE9 and iPhone.</notes>
+ <notes>
+Request #18580 Detect IE9 compat mode
+ </notes>
  <contents>
-  <dir baseinstalldir="Net/UserAgent" name="/">
-   <file baseinstalldir="Net/UserAgent" md5sum="48dce070a344ccb8fe975a929d282d3a" name="Detect/APC.php" role="php" />
-   <file baseinstalldir="Net/UserAgent" md5sum="c9ce540166ee61504e094e04c2d73206" name="tests/example.php" role="test" />
-   <file baseinstalldir="Net/UserAgent" md5sum="9a774eead8e9c5f9c09e29a3e4089a03" name="Detect.php" role="php" />
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="f7c2cd943b38bf476a463ec34f411d58" name="docs/example.php" role="doc" />
+   <file baseinstalldir="/" md5sum="b0f9ab12294e5c5d77c7838334815627" name="Net/UserAgent/Detect.php" role="php" />
+   <file baseinstalldir="/" md5sum="22db54359392b09a052a5eb769eb132c" name="Net/UserAgent/Detect/APC.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -74,7 +73,9 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2002-05-21</date>
    <license uri="http://www.example.com">PHP 2.01</license>
-   <notes>This is the initial independent PEAR release.</notes>
+   <notes>
+This is the initial independent PEAR release.
+   </notes>
   </release>
   <release>
    <version>
@@ -87,13 +88,15 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2004-03-11</date>
    <license uri="http://www.example.com">PHP 2.01</license>
-   <notes>* Made it PHP5 compatible in a way that is BC
+   <notes>
+* Made it PHP5 compatible in a way that is BC
 * Added support for Safari
 * Bumped konq&apos;s javascript version up to 1.4
 * Fix bug where w3m caused warnings
 * fixed a notice error when the user agent is empty
 * Fixed missing windows xp detection and added nested_table_render_bug quirk for netscape 4.8 and below. 
-* Code cleanups.</notes>
+* Code cleanups.
+   </notes>
   </release>
   <release>
    <version>
@@ -106,9 +109,11 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2005-04-18</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>* Added support for firefox, opera6, opera7, aol8, webdav, netgem/iplayer, and win2003
+   <notes>
+* Added support for firefox, opera6, opera7, aol8, webdav, netgem/iplayer, and win2003
 * The getQuirk() method now works correctly
-* Normally all browser information is cached the first time Net_UserAgent_Detect is run on a page to make it as speedy as possible.  However, in some case there is need to clear the cached data.  This can now be done by setting the &quot;re-evaluate&quot; option.</notes>
+* Normally all browser information is cached the first time Net_UserAgent_Detect is run on a page to make it as speedy as possible.  However, in some case there is need to clear the cached data.  This can now be done by setting the &quot;re-evaluate&quot; option.
+   </notes>
   </release>
   <release>
    <version>
@@ -121,11 +126,13 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2006-04-19</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>* Adding new &quot;browsers&quot; that make it easier to exclude old browsers: belowie6, belowns6, and belowopera8
+   <notes>
+* Adding new &quot;browsers&quot; that make it easier to exclude old browsers: belowie6, belowns6, and belowopera8
 * Additional browsers now supported: opera8, ie7, icab
 * Adding new &quot;feature&quot; which tells if a browser is AJAX enabled: ajax
 * IE 5 on Mac is now detected correctly as ie5
-* Force override of the user agent now works.</notes>
+* Force override of the user agent now works.
+   </notes>
   </release>
   <release>
    <version>
@@ -138,10 +145,12 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2007-04-23</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>* Additional browsers are now detected: opera9, firefox1.5, and firefox2.x
+   <notes>
+* Additional browsers are now detected: opera9, firefox1.5, and firefox2.x
 * Added new feature detection for if a browsers has SVG
 * Added new feature detection for if a browsers has CSS2
-* Fixed a bug that crashed the script when running with APC</notes>
+* Fixed a bug that crashed the script when running with APC
+   </notes>
   </release>
   <release>
    <version>
@@ -154,10 +163,12 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2007-09-19</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>* Added a subclass, Net_UserAgent_Detect_APC, which allows Net_UserAgent_Detect results to be cached which makes subsequent lookups for that specific User Agent string very fast (Lucas Nealan)
+   <notes>
+* Added a subclass, Net_UserAgent_Detect_APC, which allows Net_UserAgent_Detect results to be cached which makes subsequent lookups for that specific User Agent string very fast (Lucas Nealan)
 * Added support Windows CE (Lucas Nealan)
 * Added support for IE Mobile (Lucas Nealan)
-* Quirk detect for AJAX has been updated (Lucas Nealan)</notes>
+* Quirk detect for AJAX has been updated (Lucas Nealan)
+   </notes>
   </release>
   <release>
    <version>
@@ -170,8 +181,10 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2008-10-11</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>* Added support for Google Chrome, Firefox 3, and Safari Mobile (iphone) (matteo)
-* Fixed a path error in APC.php.</notes>
+   <notes>
+* Added support for Google Chrome, Firefox 3, and Safari Mobile (iphone) (matteo)
+* Fixed a path error in APC.php.
+   </notes>
   </release>
   <release>
    <version>
@@ -184,8 +197,10 @@ Adding support for IE9 and iPhone.</notes>
    </stability>
    <date>2009-06-09</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>Request #14790 - PHPCS
-Request #16224 - IE8, Vista detection</notes>
+   <notes>
+Request #14790 - PHPCS
+Request #16224 - IE8, Vista detection
+   </notes>
   </release>
   <release>
    <version>
@@ -198,10 +213,27 @@ Request #16224 - IE8, Vista detection</notes>
    </stability>
    <date>2010-04-15</date>
    <license uri="http://www.php.net/license">PHP License</license>
-   <notes>#15101: IE7up and IE8up correctly detected.
+   <notes>
+#15101: IE7up and IE8up correctly detected.
 #15834: Now detecting different versions of OSX.
 #16934: Fix undefined offset error.
-Adding support for IE9 and iPhone.</notes>
+Adding support for IE9 and iPhone.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.5.3</release>
+    <api>2.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-01-17</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+Request #18580 Detect IE9 compat mode
+   </notes>
   </release>
  </changelog>
 </package>
