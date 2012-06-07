@@ -127,7 +127,7 @@ class Net_UserAgent_Detect {
         // Array that stores all of the flags for the operating systems,
         // and in some cases the versions of those operating systems (windows)
         $os = &Net_UserAgent_Detect::_getStaticProperty('os');
-        $os = array_flip(array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'wince', 'winme', 'win2k', 'winxp', 'winnt', 'win2003', 'vista', 'win7', 'os2', 'mac', 'mactiger', 'macleopard', 'macsnowleopard', 'mac68k', 'macppc', 'iphone', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd'));
+        $os = array_flip(array('win', 'win95', 'win16', 'win31', 'win9x', 'win98', 'wince', 'winme', 'win2k', 'winxp', 'winnt', 'win2003', 'vista', 'win7', 'os2', 'mac', 'mactiger', 'macleopard', 'macsnowleopard', 'mac68k', 'macppc', 'iphone', 'ipad', 'linux', 'unix', 'vms', 'sun', 'sun4', 'sun5', 'suni86', 'irix', 'irix5', 'irix6', 'hpux', 'hpux9', 'hpux10', 'aix', 'aix1', 'aix2', 'aix3', 'aix4', 'sco', 'unixware', 'mpras', 'reliant', 'dec', 'sinix', 'freebsd', 'bsd'));
 
         // Array which stores known issues with the given client that can
         // be used for on the fly tweaking so that the client may recieve
@@ -356,6 +356,7 @@ class Net_UserAgent_Detect {
             $os['mac68k']   = $os['mac'] && (strpos($agt, '68k') !== false || strpos($agt, '68000') !== false);
             $os['macppc']   = $os['mac'] && (strpos($agt, 'ppc') !== false || strpos($agt, 'powerpc') !== false);
             $os['iphone']   = strpos($agt, 'iphone') !== false;
+            $os['ipad']     = strpos($agt, 'ipad') !== false;
             $os['sun']      = strpos($agt, 'sunos') !== false;
             $os['sun4']     = strpos($agt, 'sunos 4') !== false;
             $os['sun5']     = strpos($agt, 'sunos 5') !== false;
@@ -725,6 +726,7 @@ class Net_UserAgent_Detect {
                    'macleopard' => 'OS X Leopard (10.5)',
                    'macsnowleopard' => 'OS X Snow Leopard (10.6)',
                    'iphone' => 'iPhone',
+                   'ipad' => 'iPad',
                    'os2' => 'OS/2',
                    'unix'  => 'Linux/Unix');
         }
