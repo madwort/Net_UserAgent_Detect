@@ -1,0 +1,38 @@
+{
+    "authors": [
+        {
+            "email": "jrust@php.net",
+            "name": "Jason Rust",
+            "role": "Lead"
+        },
+        {
+            "email": "dallen@php.net",
+            "name": "Dan Allen",
+            "role": "Helper"
+        },
+        {
+            "email": "gurugeek@php.net",
+            "name": "David Costa",
+            "role": "Helper"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "./"
+        ]
+    },
+    "description": "More info available on: http://pear.php.net/package/Net_UserAgent",
+    "license": "PHP License",
+    "name": "pear/net_useragent",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Net_UserAgent_Detect",
+        "source": "https://github.com/pear/Net_UserAgent_Detect"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
